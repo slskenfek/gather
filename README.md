@@ -15,17 +15,17 @@
 ---
 
 ## 🛠️ 시스템 구성
-[Client]
-↓
-[API Controller]
-↓
-[Queue]
-↓
-[Distributed Scheduler]
-↓
-[Worker]
-└→ 비즈니스 로직 처리
-└→ 로그 저장
+[Client] <br>
+  ↓ <br>
+[API Controller] <br>
+  ↓ <br>
+[Queue] <br>
+  ↓ <br>
+[Distributed Scheduler] <br>
+  ↓ <br>
+[Worker] <br>
+└→ 비즈니스 로직 처리 <br>
+└→ 로그 저장 <br>
 
 
 ---
