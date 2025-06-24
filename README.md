@@ -15,17 +15,17 @@
 ---
 
 ## 🛠️ 시스템 구성
-[Client]
-↓
-[API Controller]
-↓
-[Queue]
-↓
-[Distributed Scheduler]
-↓
-[Worker]
-└→ 비즈니스 로직 처리
-└→ 로그 저장
+[Client] <br>
+  ↓ <br>
+[API Controller] <br>
+  ↓ <br>
+[Queue] <br>
+  ↓ <br>
+[Distributed Scheduler] <br>
+  ↓ <br>
+[Worker] <br>
+└→ 비즈니스 로직 처리 <br>
+└→ 로그 저장 <br>
 
 
 ---
@@ -43,7 +43,7 @@
 - 분산 환경에서도 안정적인 실행 보장
 - 확장 가능한 구조 (Worker, Queue, Scheduler 분리)
 - 인터페이스 기반 확장성
-
+- 멀티 쓰레딩 보장
 ---
 
 ## 🚧 개발 예정 사항
