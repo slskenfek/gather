@@ -2,14 +2,16 @@ package com.qather.distributed.event.task.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
-public class TaskParam {
+public class MemoryTaskParam {
 
     private String code;
     private String type;
     private String payload;
+    private LocalDateTime time;
 
 }
