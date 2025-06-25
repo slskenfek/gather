@@ -1,10 +1,7 @@
 package com.qather.distributed.api;
 
-
 import com.qather.distributed.event.log.dto.LogParam;
-import com.qather.distributed.event.task.dto.MemoryTaskParam;
-import com.qather.distributed.event.task.model.QueueTask;
-import lombok.RequiredArgsConstructor;
+import com.qather.distributed.event.producer.model.QueueTask;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +15,7 @@ public class LogController {
 
 
     private final QueueTask<LogParam> queueTask;
+
 
     public LogController(@Qualifier(value = "logQueue") QueueTask<LogParam> queueTask) {
         this.queueTask = queueTask;

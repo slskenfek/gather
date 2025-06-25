@@ -1,7 +1,7 @@
 package com.qather.distributed.queue;
 
-import com.qather.distributed.event.task.dto.MemoryTaskParam;
-import com.qather.distributed.event.task.model.QueueTask;
+import com.qather.distributed.event.producer.dto.MemoryTaskParam;
+import com.qather.distributed.event.producer.model.QueueTask;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.qather.distributed.event.task.model;
+package com.qather.distributed.event.producer.model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class MemoryLogQueueTask<T> implements QueueTask<T> {
 
-    private final static int QUEUE_CAPACITY = 10;
     private final BlockingQueue<T> queue;
     private static final Logger log = LoggerFactory.getLogger(MemoryLogQueueTask.class);
 

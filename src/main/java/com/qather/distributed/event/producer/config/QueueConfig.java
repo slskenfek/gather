@@ -1,9 +1,8 @@
-package com.qather.distributed.event.task.config;
+package com.qather.distributed.event.producer.config;
 
 import com.qather.distributed.event.log.dto.LogParam;
-import com.qather.distributed.event.task.model.MemoryLogQueueTask;
-import com.qather.distributed.event.task.model.QueueTask;
-import lombok.extern.java.Log;
+import com.qather.distributed.event.producer.model.MemoryLogQueueTask;
+import com.qather.distributed.event.producer.model.QueueTask;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

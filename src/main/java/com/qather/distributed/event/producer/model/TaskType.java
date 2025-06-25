@@ -1,6 +1,4 @@
-package com.qather.distributed.event.task.model;
-
-import lombok.Getter;
+package com.qather.distributed.event.producer.model;
 
 
 public enum TaskType {

@@ -1,4 +1,4 @@
-package com.qather.distributed.event.task.dto;
+package com.qather.distributed.event.producer.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
