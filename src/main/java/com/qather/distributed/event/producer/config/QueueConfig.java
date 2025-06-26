@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QueueConfig {
 
-    @Bean("logQueue")
+    @Bean
     public QueueTask<LogParam> logQueue() {
         return new MemoryLogQueueTask<LogParam>(50);
     }

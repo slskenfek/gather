@@ -26,7 +26,12 @@ public class MemoryLogQueueTask<T> implements QueueTask<T> {
     }
 
     @Override
-    public T dequeue() {
+    public T take() throws InterruptedException {
+        return queue.take();
+    }
+
+    @Override
+    public T poll() {
         return queue.poll();
     }
 

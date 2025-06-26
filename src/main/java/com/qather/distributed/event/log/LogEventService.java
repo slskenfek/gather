@@ -1,6 +1,7 @@
 package com.qather.distributed.event.log;
 
 
+import com.qather.distributed.event.log.dto.LogParam;
 import com.qather.distributed.event.log.out.adapter.LogEventAdapter;
 
 import lombok.RequiredArgsConstructor;
@@ -12,5 +13,9 @@ public class LogEventService {
     private final LogEventAdapter logEventAdapter;
 
 
+    public boolean createLog(LogParam param) {
+        logEventAdapter.createLog(param);
+        return true;
+    }
 
 }

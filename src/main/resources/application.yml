@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/temp
-    username: temp
-    password: temp
+    url: jdbc:postgresql://172.30.1.94:5432/qather
+    username: distributed
+    password: qwer1234
     driver-class-name: org.postgresql.Driver
 
   jpa:
