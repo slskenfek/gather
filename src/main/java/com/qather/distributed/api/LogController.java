@@ -2,6 +2,7 @@ package com.qather.distributed.api;
 
 import com.qather.distributed.event.consumer.worker.LogWorkerService;
 import com.qather.distributed.event.log.dto.LogParam;
+import com.qather.distributed.event.log.dto.LogRequest;
 import com.qather.distributed.event.producer.model.QueueTask;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,15 +20,9 @@ public class LogController {
     private final LogWorkerService logWorkerService;
 
 
-
     @PostMapping("/v1/log")
-    public ResponseEntity<String> createLog(@RequestBody LogParam logParam,
-                                            @RequestBody ActionParam actionParam,
-                                            @RequestBody ErrorParam errorParam
-                                            ) {
-
-        LogWorkerService.init(logParam, actionParam, errorParam);
-
+    public ResponseEntity<String> createLog(@RequestBody LogRequest request) {
+        logWorkerService.init(request.getLogParam(), request.getActionParam(), request.getErrorParam());
         return ResponseEntity.ok("{'status' : 'success'}");
     }
 
