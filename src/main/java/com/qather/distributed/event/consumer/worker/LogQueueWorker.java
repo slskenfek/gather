@@ -8,8 +8,12 @@ import com.qather.distributed.event.producer.model.MemoryLogQueueTask;
 import com.qather.distributed.event.producer.model.QueueTask;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import java.util.function.Consumer;
 
 @Component
 @RequiredArgsConstructor
@@ -25,41 +29,35 @@ public class LogQueueWorker {
     private final LogEventService logEventService;
 
 
-    //TODO 과연 이렇게 처리 하면 좋은가 ? ? ? 로직은 제네릭으로 통일 시키고 각자 나누는걸 고려해보자
-    @PostConstruct
-    public void init() {
+
+
+
+    private final static Logger log = LoggerFactory.getLogger(LogQueueWorker.class);
+
+
+    public void workerInit() {
+        startWorkerThread(logQueue, logEventService::createLog, "log-worker-");
+        startWorkerThread(actionQueue, logEventService::createActionLog, "action-worker-");
+        startWorkerThread(errorQueue, logEventService::errorLog, "error-worker-");
+    }
+
+    private <T> void startWorkerThread(QueueTask<T> queueTask, Consumer<T> handler, String threadName) {
 
         new Thread(() -> {
-            while (true) {
+            while (!Thread.currentThread().isInterrupted()) {
                 try {
-
-                    LogParam logPoll = logQueue.take();
-
-                    if (logPoll != null) {
-                        logEventService.createLog(logPoll);
+                    T task = queueTask.take();
+                    if (task != null) {
+                        handler.accept(task);
                     }
 
-                    ActionParam actionPoll = actionQueue.take();
-
-                    if (actionPoll != null) {
-
-                    }
-
-                    ErrorParam errorPoll = errorQueue.take();
-
-                    if (errorPoll != null) {
-
-                    }
-
-                } catch (Exception e) {
+                } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    break;
+                } catch (Exception e) {
+                    log.error("이벤트 루프 내부 에러 발생 : {}" , e.getMessage());
                 }
             }
-
-        }, "log-queue-thread").start();
-
-
+        }, threadName).start();
     }
 
 }
