@@ -21,7 +21,7 @@ public class LogWorkerService {
 
 
     @Async("logExecutor")
-    public void init(LogParam logParam, ActionParam actionParam, ErrorParam errorParam) {
+    public void createLogQueue(LogParam logParam, ActionParam actionParam, ErrorParam errorParam) {
         logQueue.enqueueTask(logParam);
         actionQueue.enqueueTask(actionParam);
         errorQueue.enqueueTask(errorParam);

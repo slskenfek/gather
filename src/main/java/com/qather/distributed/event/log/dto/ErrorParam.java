@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ErrorParam {
-    private int id;
     private String code;
     private String stace;
     private String errorMsg;

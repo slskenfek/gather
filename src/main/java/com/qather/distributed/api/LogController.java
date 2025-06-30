@@ -22,7 +22,7 @@ public class LogController {
 
     @PostMapping("/v1/log")
     public ResponseEntity<String> createLog(@RequestBody LogRequest request) {
-        logWorkerService.init(request.getLogParam(), request.getActionParam(), request.getErrorParam());
+        logWorkerService.createLogQueue(request.getLogParam(), request.getActionParam(), request.getErrorParam());
         return ResponseEntity.ok("{'status' : 'success'}");
     }
 
