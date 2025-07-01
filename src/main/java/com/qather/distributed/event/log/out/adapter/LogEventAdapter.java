@@ -28,10 +28,10 @@ public class LogEventAdapter {
 
 
     public void createActionLog(ActionParam param) {
-        actionRepository.save();
+        actionRepository.save(param.toActionLogEntity());
     }
 
     public void errorLog(ErrorParam param) {
-        errorRepository.save();
+        errorRepository.save(param.toErrorLogEntity());
     }
 }

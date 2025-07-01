@@ -1,4 +1,4 @@
-package com.qather.distributed.event.log;
+package com.qather.distributed.event.log.service;
 
 
 import com.qather.distributed.event.log.dto.ActionParam;
@@ -15,19 +15,16 @@ public class LogEventService {
     private final LogEventAdapter logEventAdapter;
 
 
-    public boolean createLog(LogParam param) {
+    public void createLog(LogParam param) {
         logEventAdapter.createLog(param);
-        return true;
     }
 
-    public boolean createActionLog(ActionParam param) {
+    public void createActionLog(ActionParam param) {
         logEventAdapter.createActionLog(param);
-        return true;
     }
 
-    public boolean errorLog(ErrorParam param) {
+    public void errorLog(ErrorParam param) {
         logEventAdapter.errorLog(param);
-        return true;
     }
 
 }

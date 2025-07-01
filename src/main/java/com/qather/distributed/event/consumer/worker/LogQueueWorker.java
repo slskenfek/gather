@@ -1,16 +1,13 @@
 package com.qather.distributed.event.consumer.worker;
 
-import com.qather.distributed.event.log.LogEventService;
+import com.qather.distributed.event.log.service.LogEventService;
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;
 import com.qather.distributed.event.log.dto.LogParam;
-import com.qather.distributed.event.producer.model.MemoryLogQueueTask;
 import com.qather.distributed.event.producer.model.QueueTask;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Consumer;

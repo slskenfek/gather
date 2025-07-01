@@ -1,11 +1,8 @@
-package com.qather.distributed.api;
+package com.qather.distributed.controller.log;
 
 import com.qather.distributed.event.consumer.worker.LogWorkerService;
-import com.qather.distributed.event.log.dto.LogParam;
 import com.qather.distributed.event.log.dto.LogRequest;
-import com.qather.distributed.event.producer.model.QueueTask;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
