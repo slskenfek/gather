@@ -1,23 +1,22 @@
-package com.qather.distributed.event.consumer.worker;
+package com.qather.distributed.event.producer.service;
 
 
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;
 import com.qather.distributed.event.log.dto.LogParam;
+import com.qather.distributed.event.producer.model.QueueFactory;
 import com.qather.distributed.event.producer.model.QueueTask;
-import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
-public class LogWorkerService {
+public class LogProducerService {
 
-    private final QueueTask<LogParam> logQueue;
 
-    private final QueueTask<ActionParam> actionQueue;
+    private final QueueTask<LogParam> logQueue = QueueFactory.getLogQueue();
+    private final QueueTask<ActionParam> actionQueue = QueueFactory.getActionQueue();
+    private final QueueTask<ErrorParam> errorQueue = QueueFactory.getErrorQueue();
 
-    private final QueueTask<ErrorParam> errorQueue;
 
 
     @Async("logExecutor")

@@ -4,6 +4,7 @@ import com.qather.distributed.event.log.service.LogEventService;
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;
 import com.qather.distributed.event.log.dto.LogParam;
+import com.qather.distributed.event.producer.model.QueueFactory;
 import com.qather.distributed.event.producer.model.QueueTask;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -16,18 +17,13 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor
 public class LogQueueWorker {
 
+    private final QueueTask<LogParam> logQueue = QueueFactory.getLogQueue();
 
-    private final QueueTask<LogParam> logQueue;
+    private final QueueTask<ActionParam> actionQueue = QueueFactory.getActionQueue();
 
-    private final QueueTask<ActionParam> actionQueue;
-
-    private final QueueTask<ErrorParam> errorQueue;
+    private final QueueTask<ErrorParam> errorQueue = QueueFactory.getErrorQueue();
 
     private final LogEventService logEventService;
-
-
-
-
 
     private final static Logger log = LoggerFactory.getLogger(LogQueueWorker.class);
 

@@ -1,6 +1,6 @@
-package com.qather.distributed.controller.log;
+package com.qather.distributed.event.producer.controller.log;
 
-import com.qather.distributed.event.consumer.worker.LogWorkerService;
+import com.qather.distributed.event.producer.service.LogProducerService;
 import com.qather.distributed.event.log.dto.LogRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LogController {
 
-    private final LogWorkerService logWorkerService;
+    private final LogProducerService logProducerService;
 
 
     @PostMapping("/v1/log")
     public ResponseEntity<String> createLog(@RequestBody LogRequest request) {
-        logWorkerService.createLogQueue(request.getLogParam(), request.getActionParam(), request.getErrorParam());
+        logProducerService.createLogQueue(request.getLogParam(), request.getActionParam(), request.getErrorParam());
         return ResponseEntity.ok("{'status' : 'success'}");
     }
 

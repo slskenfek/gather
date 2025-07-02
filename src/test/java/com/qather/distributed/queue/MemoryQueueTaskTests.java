@@ -1,9 +1,8 @@
 package com.qather.distributed.queue;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qather.distributed.controller.log.LogController;
-import com.qather.distributed.event.consumer.worker.LogWorkerService;
+import com.qather.distributed.event.producer.controller.log.LogController;
+import com.qather.distributed.event.producer.service.LogProducerService;
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;
 import com.qather.distributed.event.log.dto.LogParam;
@@ -33,7 +32,7 @@ public class MemoryQueueTaskTests {
     QueueTask<MemoryTaskParam> queueTask;
 
     @Autowired
-    LogWorkerService logWorkerService;
+    LogProducerService logProducerService;
 
     @Autowired
     MockMvc mockMvc;
@@ -54,7 +53,7 @@ public class MemoryQueueTaskTests {
 
         mockMvc.perform(post("/api/v1/log")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(json)) // ← 여기가 핵심
+                        .content(json))
                 .andExpect(status().isOk())
                 .andExpect(content().string("{'status' : 'success'}"));
 

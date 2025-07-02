@@ -8,20 +8,20 @@ import com.qather.distributed.event.producer.model.QueueTask;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+/*@Configuration
 public class QueueConfig {
 
-    @Bean
+    @Bean("logQueue")
     public QueueTask<LogParam> logQueue() {
         return new MemoryLogQueueTask<LogParam>(50);
     }
-    @Bean
+    @Bean("actionQueue")
     public QueueTask<ActionParam> actionQueue() {
         return new MemoryLogQueueTask<ActionParam>(50);
     }
-    @Bean
+    @Bean("errorQueue")
     public QueueTask<ErrorParam> errorQueue() {
         return new MemoryLogQueueTask<ErrorParam>(10);
     }
 
-}
+}*/

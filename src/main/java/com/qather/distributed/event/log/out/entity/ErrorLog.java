@@ -37,7 +37,7 @@ public class ErrorLog {
     @Column(name = "errorMsg", length = 100, nullable = false)
     private String errorMsg;
 
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "users_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Users users;
 

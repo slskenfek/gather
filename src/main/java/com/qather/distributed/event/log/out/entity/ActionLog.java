@@ -33,7 +33,7 @@ public class ActionLog {
     @Column(name = "content", length = 100)
     private String content;
 
-    @JoinColumn(name = "id", nullable = false)
+    @JoinColumn(name = "users_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
     private Users users;
 

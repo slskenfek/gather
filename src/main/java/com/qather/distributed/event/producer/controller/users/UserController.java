@@ -1,4 +1,4 @@
-package com.qather.distributed.controller.users;
+package com.qather.distributed.event.producer.controller.users;
 
 import com.qather.distributed.event.users.dto.UserRequest;
 import com.qather.distributed.event.users.service.UserService;
