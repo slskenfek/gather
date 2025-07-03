@@ -5,7 +5,7 @@ import com.qather.distributed.event.log.dto.ErrorParam;
 import com.qather.distributed.event.log.dto.LogParam;
 import com.qather.distributed.event.log.out.repository.ActionRepository;
 import com.qather.distributed.event.log.out.repository.ErrorRepository;
-import com.qather.distributed.event.log.out.repository.LogReadRepository;
+import com.qather.distributed.event.log.out.repository.AccessLogReadRepository;
 import com.qather.distributed.event.log.out.repository.LogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class LogEventAdapter {
 
-    private final LogReadRepository readRepository;
+    private final AccessLogReadRepository readRepository;
     private final LogRepository logRepository;
 
     private final ActionRepository actionRepository;
