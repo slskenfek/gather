@@ -17,7 +17,7 @@ public class MemoryLogQueueTask<T> implements QueueTask<T> {
     }
 
     @Override
-    public void enqueueTask(T param) {
+    public void createTask(T param) {
         boolean check = queue.offer(param);
         if(!check) {
             log.warn("큐가 가득 찼습니다 {}", param);
