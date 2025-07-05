@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DatabaseLogAdapter implements LogEventAdapter {
 
-    private final AccessLogReadRepository readRepository;
     private final LogRepository logRepository;
 
     private final ActionRepository actionRepository;
