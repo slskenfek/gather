@@ -45,6 +45,8 @@ public class LogQueueWorker {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     T task = queueTask.take();
+                    log.info("task size = : {}", queueTask.size());
+                    log.info("task= : {}", task);
                     if (task != null) {
                         handler.accept(task);
                     }
