@@ -28,6 +28,7 @@ public class ActionParam {
         ActionLog actionLog = new ActionLog();
         Users users = new Users();
         users.setUserId(userId);
+        users.setUsername("custom");
         actionLog.setContent(content);
         actionLog.setTime(time);
         actionLog.setUrl(url);

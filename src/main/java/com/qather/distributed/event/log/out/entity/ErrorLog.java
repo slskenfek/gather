@@ -38,7 +38,7 @@ public class ErrorLog {
     private String errorMsg;
 
     @JoinColumn(name = "user_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Users users;
 
     /**

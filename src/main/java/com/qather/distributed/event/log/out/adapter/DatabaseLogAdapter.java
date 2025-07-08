@@ -8,11 +8,15 @@ import com.qather.distributed.event.log.out.repository.ErrorRepository;
 import com.qather.distributed.event.log.out.repository.AccessLogReadRepository;
 import com.qather.distributed.event.log.out.repository.LogRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class DatabaseLogAdapter implements LogEventAdapter {
+
+    private static final Logger LOG = LoggerFactory.getLogger(DatabaseLogAdapter.class);
 
     private final LogRepository logRepository;
 
@@ -20,9 +24,13 @@ public class DatabaseLogAdapter implements LogEventAdapter {
 
     private final ErrorRepository errorRepository;
 
+    private int count = 0;
+
     @Override
     public void createLog(LogParam param) {
+        count++;
         logRepository.save(param.toAccessLogEntity());
+        LOG.info("count : {}", count);
     }
 
     @Override

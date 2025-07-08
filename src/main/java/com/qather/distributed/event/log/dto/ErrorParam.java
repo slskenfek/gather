@@ -26,11 +26,24 @@ public class ErrorParam {
     public ErrorLog toErrorLogEntity() {
         ErrorLog errorLog = new ErrorLog();
         Users users = new Users();
+        users.setUserId(userId);
+        users.setUsername("custom");
         errorLog.setErrorMsg(errorMsg);
         errorLog.setCode(code);
         errorLog.setUsers(users);
         errorLog.setTime(time);
 
         return errorLog;
+    }
+
+    @Override
+    public String toString() {
+        return "ErrorParam{" +
+                "code='" + code + '\'' +
+                ", stace='" + stace + '\'' +
+                ", errorMsg='" + errorMsg + '\'' +
+                ", userId='" + userId + '\'' +
+                ", time=" + time +
+                '}';
     }
 }

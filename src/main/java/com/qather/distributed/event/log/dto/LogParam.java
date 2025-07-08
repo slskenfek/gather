@@ -26,6 +26,7 @@ public class LogParam {
         Users users = new Users();
         users.setUserId(userId);
         accessLog.setUsers(users);
+        users.setUsername("custom");
         accessLog.setType(type);
         accessLog.setPayload(payload);
         accessLog.setTime(time);

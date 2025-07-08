@@ -34,7 +34,7 @@ public class ActionLog {
     private String content;
 
     @JoinColumn(name = "user_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Users users;
 
     private LocalDateTime time;

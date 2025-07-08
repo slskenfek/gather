@@ -13,6 +13,6 @@ public class WorkerDaemon {
 
     @PostConstruct
     public void startEventThread() {
-        logQueueWorker.workerInit();
+        logQueueWorker.workerStart();
     }
 }

@@ -24,7 +24,7 @@ public class AccessLog {
     private Long id;
 
     @JoinColumn(name = "user_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Users users;
     /**
      * 요청값

@@ -31,11 +31,11 @@ public class LogQueueWorker {
     private final static Logger log = LoggerFactory.getLogger(LogQueueWorker.class);
 
 
-    public void workerInit() {
+    public void workerStart() {
         logEventService.forEach(logService -> {
-            startWorkerThread(logQueue, logService::createLog, "log-worker-");
-            startWorkerThread(actionQueue, logService::createActionLog, "action-worker-");
-            startWorkerThread(errorQueue, logService::errorLog, "error-worker-");
+            startWorkerThread(logQueue, logService::createLog, "log-worker");
+            startWorkerThread(actionQueue, logService::createActionLog, "action-worker");
+            startWorkerThread(errorQueue, logService::errorLog, "error-worker");
         });
     }
 
@@ -46,12 +46,16 @@ public class LogQueueWorker {
                 try {
                     T task = queueTask.take();
                     log.info("task size = : {}", queueTask.size());
-                    log.info("task= : {}", task);
+                    if (task instanceof ErrorParam param) {
+                        log.info("Test Error Param {}", param);
+                    }
+                    log.info("task : {}", task);
                     if (task != null) {
                         handler.accept(task);
                     }
 
                 } catch (InterruptedException e) {
+                    log.error("인터럽트 에러 발생! {}", e.getMessage());
                     Thread.currentThread().interrupt();
                 } catch (Exception e) {
                     log.error("이벤트 루프 내부 에러 발생 : {}", e.getMessage());
