@@ -33,4 +33,14 @@ public class LogParam {
 
         return accessLog;
     }
+
+    @Override
+    public String toString() {
+        return "LogParam{" +
+                "userId='" + userId + '\'' +
+                ", type='" + type + '\'' +
+                ", payload='" + payload + '\'' +
+                ", time=" + time +
+                '}';
+    }
 }

@@ -1,10 +1,9 @@
 package com.qather.distributed.event.consumer.worker;
 
-import com.qather.distributed.event.log.service.DatabaseLogEventService;
+import com.qather.distributed.event.log.service.LogEventService;
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;
 import com.qather.distributed.event.log.dto.LogParam;
-import com.qather.distributed.event.log.service.LogEventService;
 import com.qather.distributed.event.producer.model.QueueFactory;
 import com.qather.distributed.event.producer.model.QueueTask;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 
 @Component
@@ -26,17 +23,15 @@ public class LogQueueWorker {
 
     private final QueueTask<ErrorParam> errorQueue = QueueFactory.getErrorQueue();
 
-    private final List<LogEventService> logEventService;
+    private final LogEventService logEventService;
 
     private final static Logger log = LoggerFactory.getLogger(LogQueueWorker.class);
 
 
     public void workerStart() {
-        logEventService.forEach(logService -> {
-            startWorkerThread(logQueue, logService::createLog, "log-worker");
-            startWorkerThread(actionQueue, logService::createActionLog, "action-worker");
-            startWorkerThread(errorQueue, logService::errorLog, "error-worker");
-        });
+            startWorkerThread(logQueue, logEventService::createLog, "log-worker");
+            startWorkerThread(actionQueue, logEventService::createActionLog, "action-worker");
+            startWorkerThread(errorQueue, logEventService::errorLog, "error-worker");
     }
 
     private <T> void startWorkerThread(QueueTask<T> queueTask, Consumer<T> handler, String threadName) {
@@ -45,11 +40,7 @@ public class LogQueueWorker {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     T task = queueTask.take();
-                    log.info("task size = : {}", queueTask.size());
-                    if (task instanceof ErrorParam param) {
-                        log.info("Test Error Param {}", param);
-                    }
-                    log.info("task : {}", task);
+
                     if (task != null) {
                         handler.accept(task);
                     }
