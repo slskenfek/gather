@@ -1,5 +1,6 @@
 package com.qather.distributed.event.consumer.worker;
 
+import com.qather.distributed.event.log.service.ElasticsearchLogEventService;
 import com.qather.distributed.event.log.service.LogEventService;
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 @Component
@@ -25,16 +27,20 @@ public class LogQueueWorker {
 
     private final LogEventService logEventService;
 
+    private final ElasticsearchLogEventService elasticsearchLogEventService;
+
+
+
     private final static Logger log = LoggerFactory.getLogger(LogQueueWorker.class);
 
 
     public void workerStart() {
-            startWorkerThread(logQueue, logEventService::createLog, "log-worker");
-            startWorkerThread(actionQueue, logEventService::createActionLog, "action-worker");
-            startWorkerThread(errorQueue, logEventService::errorLog, "error-worker");
+        startWorkerThread(logQueue, List.of(logEventService::createLog, elasticsearchLogEventService::createLog), "log-worker");
+        startWorkerThread(actionQueue, List.of(logEventService::createActionLog, elasticsearchLogEventService::createActionLog), "action-worker");
+        startWorkerThread(errorQueue, List.of(logEventService::errorLog, elasticsearchLogEventService::errorLog), "error-worker");
     }
 
-    private <T> void startWorkerThread(QueueTask<T> queueTask, Consumer<T> handler, String threadName) {
+    private <T> void startWorkerThread(QueueTask<T> queueTask, List<Consumer<T>> handler, String threadName) {
 
         new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
@@ -42,7 +48,7 @@ public class LogQueueWorker {
                     T task = queueTask.take();
 
                     if (task != null) {
-                        handler.accept(task);
+                        handler.forEach(consumer -> consumer.accept(task));
                     }
 
                 } catch (InterruptedException e) {

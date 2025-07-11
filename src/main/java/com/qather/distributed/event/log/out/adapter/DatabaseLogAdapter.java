@@ -30,7 +30,6 @@ public class DatabaseLogAdapter implements LogEventAdapter {
     public void createLog(LogParam param) {
         count++;
         logRepository.save(param.toAccessLogEntity());
-        LOG.info("count : {}", count);
     }
 
     @Override

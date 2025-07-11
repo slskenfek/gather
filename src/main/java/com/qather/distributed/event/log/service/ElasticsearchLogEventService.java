@@ -4,24 +4,18 @@ package com.qather.distributed.event.log.service;
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;
 import com.qather.distributed.event.log.dto.LogParam;
-import com.qather.distributed.event.log.out.adapter.DatabaseLogAdapter;
-
+import com.qather.distributed.event.log.out.adapter.ElasticsearchLogAdapter;
 import com.qather.distributed.event.log.out.adapter.LogEventAdapter;
-import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LogEventService {
+public class ElasticsearchLogEventService {
 
 
     private final LogEventAdapter logEventAdapter;
 
-    public LogEventService(@Qualifier("databaseLogAdapter") LogEventAdapter logEventAdapter) {
-        this.logEventAdapter = logEventAdapter;
+    public ElasticsearchLogEventService(ElasticsearchLogAdapter elasticsearchLogAdapter) {
+        this.logEventAdapter = elasticsearchLogAdapter;
     }
 
     public void createLog(LogParam param) {
