@@ -1,10 +1,11 @@
 package com.qather.distributed.event.consumer.worker;
 
 import com.qather.distributed.event.log.service.ElasticsearchLogEventService;
-import com.qather.distributed.event.log.service.LogEventService;
+import com.qather.distributed.event.log.service.DatabaseLogEventService;
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;
 import com.qather.distributed.event.log.dto.LogParam;
+import com.qather.distributed.event.log.service.LogEventService;
 import com.qather.distributed.event.producer.model.QueueFactory;
 import com.qather.distributed.event.producer.model.QueueTask;
 import lombok.RequiredArgsConstructor;
@@ -20,24 +21,22 @@ import java.util.function.Consumer;
 public class LogQueueWorker {
 
     private final QueueTask<LogParam> logQueue = QueueFactory.getLogQueue();
-
     private final QueueTask<ActionParam> actionQueue = QueueFactory.getActionQueue();
-
     private final QueueTask<ErrorParam> errorQueue = QueueFactory.getErrorQueue();
 
-    private final LogEventService logEventService;
-
-    private final ElasticsearchLogEventService elasticsearchLogEventService;
-
+    private final List<LogEventService> logEventService;
 
 
     private final static Logger log = LoggerFactory.getLogger(LogQueueWorker.class);
 
 
     public void workerStart() {
-        startWorkerThread(logQueue, List.of(logEventService::createLog, elasticsearchLogEventService::createLog), "log-worker");
-        startWorkerThread(actionQueue, List.of(logEventService::createActionLog, elasticsearchLogEventService::createActionLog), "action-worker");
-        startWorkerThread(errorQueue, List.of(logEventService::errorLog, elasticsearchLogEventService::errorLog), "error-worker");
+        logEventService.forEach(service -> {
+            startWorkerThread(logQueue, List.of(service::createLog), "log-worker");
+            startWorkerThread(actionQueue, List.of(service::createActionLog), "action-worker");
+            startWorkerThread(errorQueue, List.of(service::errorLog), "error-worker");
+        });
+
     }
 
     private <T> void startWorkerThread(QueueTask<T> queueTask, List<Consumer<T>> handler, String threadName) {
