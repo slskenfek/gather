@@ -21,7 +21,7 @@ public class ActionLogController {
 
 
     @GetMapping("")
-    public ResponseEntity<PageImpl<LogResponse.ActionLog>> searchActionLog(@RequestParam SearchLogRequest.ActionParam param, Pageable pageable) {
+    public ResponseEntity<PageImpl<LogResponse.ActionLog>> searchActionLog(SearchLogRequest.ActionParam param, Pageable pageable) {
         PageImpl<LogResponse.ActionLog> responseAccessLog = logReadService.searchActionLog(param, pageable);
         return ResponseEntity.ok(responseAccessLog);
     }

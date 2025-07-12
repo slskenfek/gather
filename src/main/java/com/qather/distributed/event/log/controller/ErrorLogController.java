@@ -20,7 +20,7 @@ public class ErrorLogController {
 
 
     @GetMapping("")
-    public ResponseEntity<PageImpl<LogResponse.ErrorLog>> searchErrorLog(@RequestParam SearchLogRequest.ErrorParam param, Pageable pageable) {
+    public ResponseEntity<PageImpl<LogResponse.ErrorLog>> searchErrorLog(SearchLogRequest.ErrorParam param, Pageable pageable) {
         PageImpl<LogResponse.ErrorLog> responseAccessLog = logReadService.searchErrorLog(param, pageable);
         return ResponseEntity.ok(responseAccessLog);
     }

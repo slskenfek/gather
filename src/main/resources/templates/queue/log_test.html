@@ -22,6 +22,25 @@
     </button>
 
     <div id="result" class="mt-6 text-sm text-gray-700 space-y-2 max-h-[400px] overflow-y-auto border-t pt-4"></div>
+
+    <!-- 액션 로그 조회 -->
+    <button onclick="fetchActionLogs()"
+            class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded transition mb-2">
+        📄 액션 로그 조회
+    </button>
+
+    <!-- 액세스 로그 조회 -->
+    <button onclick="fetchAccessLogs()"
+            class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition mb-2">
+        🧾 액세스 로그 조회
+    </button>
+
+    <!-- 에러 로그 조회 -->
+    <button onclick="fetchErrorLogs()"
+            class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition mb-2">
+        🚨 에러 로그 조회
+    </button>
+
 </div>
 
 <script>
@@ -100,7 +119,63 @@
 
         resultDiv.innerHTML += `<div class="text-green-800 font-bold mt-2">📤 로그 전송 완료 (서버에서 응답 확인)</div>`;
     }
+
+
+    async function fetchActionLogs() {
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `<div class="text-blue-600 font-semibold">📄 액션 로그 불러오는 중...</div>`;
+
+        try {
+            const res = await fetch("/api/logs/action");
+            const data = await res.json();
+
+            resultDiv.innerHTML = data.map(log => `
+                <div class="text-sm text-gray-800 border-b py-1">
+                    🏷️ [${log.userId}] - ${log.url} - ${log.content} (${log.time})
+                </div>
+            `).join('');
+        } catch (err) {
+            resultDiv.innerHTML = `<div class="text-red-600">❌ 액션 로그 조회 실패: ${err}</div>`;
+        }
+    }
+
+    async function fetchAccessLogs() {
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `<div class="text-blue-600 font-semibold">🧾 액세스 로그 불러오는 중...</div>`;
+
+        try {
+            const res = await fetch("/api/logs/access");
+            const data = await res.json();
+
+            resultDiv.innerHTML = data.map(log => `
+                <div class="text-sm text-gray-800 border-b py-1">
+                    👤 [${log.userId}] - ${log.type} - ${log.payload} (${log.time})
+                </div>
+            `).join('');
+        } catch (err) {
+            resultDiv.innerHTML = `<div class="text-red-600">❌ 액세스 로그 조회 실패: ${err}</div>`;
+        }
+    }
+
+    async function fetchErrorLogs() {
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `<div class="text-blue-600 font-semibold">🚨 에러 로그 불러오는 중...</div>`;
+
+        try {
+            const res = await fetch("/api/logs/error");
+            const data = await res.json();
+
+            resultDiv.innerHTML = data.map(log => `
+                <div class="text-sm text-gray-800 border-b py-1">
+                    ❗ [${log.userId}] - ${log.code} - ${log.errorMsg} (${log.time})
+                </div>
+            `).join('');
+        } catch (err) {
+            resultDiv.innerHTML = `<div class="text-red-600">❌ 에러 로그 조회 실패: ${err}</div>`;
+        }
+    }
 </script>
 
+</script>
 </body>
 </html>

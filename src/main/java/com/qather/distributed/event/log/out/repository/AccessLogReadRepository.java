@@ -41,7 +41,13 @@ public class AccessLogReadRepository {
 
 
     public Long countAccessLog(SearchLogRequest.AccessParam accessParam) {
-        return null;
+        return jpaQueryFactory.select(accessLog.count()).from(accessLog).
+                where(
+                        eqUserId(accessParam.getUserId()),
+                        eqPayload(accessParam.getPayload()),
+                        eqType(accessParam.getType())
+
+                ).fetchOne();
     }
 
     private BooleanExpression eqUserId(String userId) {
