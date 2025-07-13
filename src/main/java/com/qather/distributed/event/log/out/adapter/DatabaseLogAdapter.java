@@ -16,19 +16,15 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DatabaseLogAdapter implements LogEventAdapter {
 
-    private static final Logger LOG = LoggerFactory.getLogger(DatabaseLogAdapter.class);
-
     private final LogRepository logRepository;
 
     private final ActionRepository actionRepository;
 
     private final ErrorRepository errorRepository;
 
-    private int count = 0;
 
     @Override
     public void createLog(LogParam param) {
-        count++;
         logRepository.save(param.toAccessLogEntity());
     }
 

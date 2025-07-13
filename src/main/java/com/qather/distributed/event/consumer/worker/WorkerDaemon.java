@@ -9,7 +9,6 @@ import com.qather.distributed.event.producer.model.QueueFactory;
 import com.qather.distributed.event.producer.model.QueueTask;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
@@ -34,16 +33,16 @@ public class WorkerDaemon {
     @PostConstruct
     public void startWorker() {
 
-        logExecutor.execute(new LogQueueWorker<>(logQueueTask, logEventService.stream()
+        logExecutor.execute(new HttpQueueWorker<>(logQueueTask, logEventService.stream()
                 .map(service -> (Consumer<LogParam>) service::createLog)
                 .toList()));
 
-        actionExecutor.execute(new LogQueueWorker<>(
+        actionExecutor.execute(new HttpQueueWorker<>(
                 actionQueueTask, logEventService.stream().map(
                         service -> (Consumer<ActionParam>) service::createActionLog)
                 .toList()));
 
-        errorExecutor.execute(new LogQueueWorker<>(
+        errorExecutor.execute(new HttpQueueWorker<>(
                 errorQueueTask, logEventService.stream().map(
                 service -> (Consumer<ErrorParam>) service::errorLog
         ).toList()));

@@ -8,11 +8,11 @@ import lombok.Getter;
 public class QueueFactory {
 
     @Getter
-    private static final QueueTask<LogParam> logQueue = new MemoryLogQueueTask<>(50);
+    private static final QueueTask<LogParam> logQueue = new MemoryLogQueueTask<>(500);
     @Getter
-    private static final QueueTask<ActionParam> actionQueue = new MemoryLogQueueTask<>(50);
+    private static final QueueTask<ActionParam> actionQueue = new MemoryLogQueueTask<>(500);
     @Getter
-    private static final QueueTask<ErrorParam> errorQueue = new MemoryLogQueueTask<>(10);
+    private static final QueueTask<ErrorParam> errorQueue = new MemoryLogQueueTask<>(500);
 
 
 }
