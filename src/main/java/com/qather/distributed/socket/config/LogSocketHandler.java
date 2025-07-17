@@ -1,4 +1,4 @@
-package com.qather.distributed.socket.service;
+package com.qather.distributed.socket.config;
 
 import com.qather.distributed.tcp.TcpBrokerProperty;
 import lombok.RequiredArgsConstructor;

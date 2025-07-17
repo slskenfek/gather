@@ -1,7 +1,5 @@
 package com.qather.distributed.socket.config;
 
-import com.qather.distributed.socket.service.LogSocketHandler;
-import com.querydsl.core.annotations.Config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
@@ -17,5 +15,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(logSocketHandler, "/ws/log/access").setAllowedOrigins("*");
+        registry.addHandler(logSocketHandler, "/ws/log/error").setAllowedOrigins("*");
+        registry.addHandler(logSocketHandler, "/ws/log/action").setAllowedOrigins("*");
     }
 }
