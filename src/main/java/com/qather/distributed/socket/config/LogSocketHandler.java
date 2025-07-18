@@ -1,6 +1,6 @@
 package com.qather.distributed.socket.config;
 
-import com.qather.distributed.tcp.TcpBrokerProperty;
+import com.qather.distributed.tcp.model.TcpBrokerProperty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.TextMessage;

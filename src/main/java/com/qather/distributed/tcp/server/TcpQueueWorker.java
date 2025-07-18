@@ -1,0 +1,46 @@
+package com.qather.distributed.tcp.server;
+
+import com.qather.distributed.tcp.model.TcpBrokerProperty;
+import com.qather.distributed.tcp.handler.TcpQueueHandler;
+import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+@Component
+@RequiredArgsConstructor
+public class TcpQueueWorker {
+
+
+    private final TcpBrokerProperty tcpBrokerProperty;
+
+    private final TcpQueueHandler tcpQueueHandler;
+    private static final Logger LOGGER = LoggerFactory.getLogger(TcpQueueWorker.class);
+
+
+    @PostConstruct
+    public void start() {
+        new Thread(() -> {
+            try (ServerSocket socket = new ServerSocket(tcpBrokerProperty.getPort())) {
+
+                while (!Thread.currentThread().isInterrupted()) {
+                    Socket accept = socket.accept();
+                    tcpQueueHandler.handleClient(accept);
+                }
+
+            } catch (IOException e) {
+                LOGGER.error("TCP 수신 실패 : {}", e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+
+
+        }, "tcp-log-worker").start();
+    }
+
+
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket 로그 테스트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-10">
+<div class="max-w-xl mx-auto bg-white shadow rounded p-6 space-y-4">
+    <h1 class="text-2xl font-bold text-center text-gray-800">🛰️ WebSocket 로그 테스트</h1>
+
+    <input id="userId" placeholder="userId" class="w-full border px-4 py-2 rounded" />
+    <input id="payload" placeholder="payload" class="w-full border px-4 py-2 rounded" />
+
+    <div class="grid grid-cols-3 gap-2">
+        <button onclick="sendAccess()" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+            Access 전송
+        </button>
+        <button onclick="sendAction()" class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">
+            Action 전송
+        </button>
+        <button onclick="sendError()" class="bg-red-600 text-white py-2 px-4 rounded hover:bg-red-700">
+            Error 전송
+        </button>
+    </div>
+
+    <div id="status" class="text-sm text-gray-700 mt-4 space-y-1"></div>
+</div>
+
+<script>
+    const accessSocket = new WebSocket("ws://localhost:8080/ws/log/access");
+    const actionSocket = new WebSocket("ws://localhost:8080/ws/log/action");
+    const errorSocket = new WebSocket("ws://localhost:8080/ws/log/error");
+
+    const statusDiv = document.getElementById("status");
+
+    function send(socket, payload, label) {
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify(payload));
+        statusDiv.innerHTML += `<div>✅ ${label} 로그 전송됨</div>`;
+      } else {
+        statusDiv.innerHTML += `<div class="text-red-600">❌ ${label} WebSocket이 아직 열리지 않았습니다.</div>`;
+      }
+    }
+
+    function getUserIdAndTime() {
+      const userId = document.getElementById("userId").value || `user_${Date.now()}`;
+      const time = new Date().toISOString();
+      return { userId, time };
+    }
+
+    function sendAccess() {
+      const { userId, time } = getUserIdAndTime();
+      const payload = {
+        type: "TEST_TYPE",
+        userId,
+        payload: document.getElementById("payload").value || "액세스 테스트",
+        time
+      };
+      send(accessSocket, payload, "Access");
+    }
+
+    function sendAction() {
+      const { userId, time } = getUserIdAndTime();
+      const payload = {
+        url: `/test-action`,
+        content: "클릭 버튼",
+        userId,
+        time
+      };
+      send(actionSocket, payload, "Action");
+    }
+
+    function sendError() {
+      const { userId, time } = getUserIdAndTime();
+      const payload = {
+        code: "ERR123",
+        stace: "java.lang.NullPointerException...",
+        errorMsg: "테스트 에러 메시지",
+        userId,
+        time
+      };
+      send(errorSocket, payload, "Error");
+    }
+
+    // 연결 상태 로그
+    [accessSocket, actionSocket, errorSocket].forEach((socket, i) => {
+      const label = ["Access", "Action", "Error"][i];
+      socket.onopen = () => statusDiv.innerHTML += `<div>🟢 ${label} WebSocket 연결됨</div>`;
+      socket.onerror = () => statusDiv.innerHTML += `<div class="text-red-600">❌ ${label} WebSocket 오류</div>`;
+      socket.onclose = () => statusDiv.innerHTML += `<div class="text-gray-500">⚠️ ${label} WebSocket 종료됨</div>`;
+    });
+</script>
+</body>
+</html>
