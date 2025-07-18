@@ -44,7 +44,7 @@ public class TcpMessageDispatcher {
                         String.valueOf(tcpParam.get("stace")),
                         String.valueOf(tcpParam.get("errorMsg")),
                         String.valueOf(tcpParam.get("userId")),
-                        LocalDateTime.parse(tcpParam.get("time").toString())
+                        LocalDateTime.now()
                 );
                 errorQueue.createTask(errorParam);
             }
@@ -53,7 +53,7 @@ public class TcpMessageDispatcher {
                         String.valueOf(tcpParam.get("url")),
                         String.valueOf(tcpParam.get("content")),
                         String.valueOf(tcpParam.get("userId")),
-                        LocalDateTime.parse(tcpParam.get("time").toString())
+                        LocalDateTime.now()
                 );
                 actionQueue.createTask(actionParam);
             }
@@ -62,7 +62,7 @@ public class TcpMessageDispatcher {
                         String.valueOf(tcpParam.get("userId")),
                         String.valueOf(tcpParam.get("type")),
                         String.valueOf(tcpParam.get("payload")),
-                        LocalDateTime.parse(tcpParam.get("time").toString())
+                        LocalDateTime.now()
                 );
                 logQueue.createTask(logParam);
             }

@@ -15,9 +15,14 @@ public class HomeTestController {
     private final static Logger log = LoggerFactory.getLogger(HomeTestController.class);
 
     @GetMapping("/log")
-    public String main() {
+    public String logTestMove() {
         log.info("===로그 테스트 환경 접속===");
         return "queue/log_test";
+    }
+
+    @GetMapping("/log/tcp")
+    public String tcpLogTestMove() {
+        return "queue/tcp_test";
     }
 
 }

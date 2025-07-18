@@ -28,9 +28,9 @@
 </div>
 
 <script>
-    const accessSocket = new WebSocket("ws://localhost:8080/ws/log/access");
-    const actionSocket = new WebSocket("ws://localhost:8080/ws/log/action");
-    const errorSocket = new WebSocket("ws://localhost:8080/ws/log/error");
+    const accessSocket = new WebSocket("ws://localhost:6001/ws/log/access");
+    const actionSocket = new WebSocket("ws://localhost:6001/ws/log/action");
+    const errorSocket = new WebSocket("ws://localhost:6001/ws/log/error");
 
     const statusDiv = document.getElementById("status");
 
@@ -45,40 +45,38 @@
 
     function getUserIdAndTime() {
       const userId = document.getElementById("userId").value || `user_${Date.now()}`;
-      const time = new Date().toISOString();
-      return { userId, time };
+      return userId;
     }
 
     function sendAccess() {
-      const { userId, time } = getUserIdAndTime();
+      const userId = getUserIdAndTime();
       const payload = {
-        type: "TEST_TYPE",
+        type: "access",
         userId,
         payload: document.getElementById("payload").value || "액세스 테스트",
-        time
       };
       send(accessSocket, payload, "Access");
     }
 
     function sendAction() {
-      const { userId, time } = getUserIdAndTime();
+      const userId = getUserIdAndTime();
       const payload = {
+        type: "action",
         url: `/test-action`,
         content: "클릭 버튼",
-        userId,
-        time
+        userId
       };
       send(actionSocket, payload, "Action");
     }
 
     function sendError() {
-      const { userId, time } = getUserIdAndTime();
+      const userId = getUserIdAndTime();
       const payload = {
+        type: "error",
         code: "ERR123",
         stace: "java.lang.NullPointerException...",
         errorMsg: "테스트 에러 메시지",
-        userId,
-        time
+        userId
       };
       send(errorSocket, payload, "Error");
     }
