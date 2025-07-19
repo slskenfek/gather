@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Action 로그 전체 조회</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+<div class="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-6">
+    <h1 class="text-2xl font-bold mb-4 text-gray-800">📜 전체 Action 로그</h1>
+
+    <div id="logContainer" class="space-y-4">
+        <!-- 로그들이 여기에 렌더링됩니다 -->
+    </div>
+
+    <div id="loading" class="mt-4 text-gray-500">불러오는 중...</div>
+</div>
+
+<script>
+        async function fetchLogs() {
+            try {
+                const response = await fetch('/api/logs/action/all');
+                if (!response.ok) throw new Error('네트워크 응답 실패');
+
+                const result = await response.json();
+                const logs = result || [];
+
+                const logContainer = document.getElementById('logContainer');
+                const loading = document.getElementById('loading');
+                loading.style.display = 'none';
+
+                if (logs.length === 0) {
+                    logContainer.innerHTML = '<p class="text-gray-500">로그가 없습니다.</p>';
+                    return;
+                }
+
+                logs.forEach(log => {
+                    const logItem = document.createElement('div');
+                    logItem.className = 'p-4 bg-gray-100 rounded shadow';
+
+                    logItem.innerHTML = `
+                        <div class="text-sm text-gray-500 mb-1">🕓 ${log.time}</div>
+                        <div><span class="font-semibold">URL:</span> ${log.url}</div>
+                        <div><span class="font-semibold">내용:</span> ${log.content}</div>
+                        <div><span class="font-semibold">유저:</span> ${log.userId}</div>
+                    `;
+                    logContainer.appendChild(logItem);
+                });
+            } catch (error) {
+                document.getElementById('loading').innerText = '오류 발생: ' + error.message;
+            }
+        }
+
+        window.onload = fetchLogs;
+    </script>
+</body>
+</html>

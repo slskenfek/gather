@@ -28,4 +28,8 @@ public class LogReadService {
     public PageImpl<LogResponse.ErrorLog> searchErrorLog(SearchLogRequest.ErrorParam errorParam, Pageable pageable) {
         return logReadAdapter.searchErrorLog(errorParam, pageable);
     }
+
+    public List<LogResponse.ActionLog> selectAll() {
+        return logReadAdapter.selectAll();
+    }
 }

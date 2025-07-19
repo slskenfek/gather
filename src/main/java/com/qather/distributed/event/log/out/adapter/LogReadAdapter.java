@@ -41,4 +41,7 @@ public class LogReadAdapter {
 
     }
 
+    public List<LogResponse.ActionLog> selectAll() {
+        return actionLogReadRepository.selectAll();
+    }
 }

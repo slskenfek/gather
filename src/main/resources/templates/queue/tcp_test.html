@@ -9,8 +9,8 @@
 <div class="max-w-xl mx-auto bg-white shadow rounded p-6 space-y-4">
     <h1 class="text-2xl font-bold text-center text-gray-800">🛰️ WebSocket 로그 테스트</h1>
 
-    <input id="userId" placeholder="userId" class="w-full border px-4 py-2 rounded" />
-    <input id="payload" placeholder="payload" class="w-full border px-4 py-2 rounded" />
+    <input id="userId" placeholder="userId" class="w-full border px-4 py-2 rounded"/>
+    <input id="payload" placeholder="payload" class="w-full border px-4 py-2 rounded"/>
 
     <div class="grid grid-cols-3 gap-2">
         <button onclick="sendAccess()" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
@@ -50,35 +50,41 @@
 
     function sendAccess() {
       const userId = getUserIdAndTime();
-      const payload = {
+       for (let i = 0; i < 100; i++) {
+        const payload = {
         type: "access",
         userId,
-        payload: document.getElementById("payload").value || "액세스 테스트",
-      };
-      send(accessSocket, payload, "Access");
+        payload: document.getElementById("payload").value || `액세스 테스트 ${i + 1}`,
+      }
+            send(accessSocket, payload, "Access");
+     }
+
     }
 
     function sendAction() {
       const userId = getUserIdAndTime();
-      const payload = {
-        type: "action",
-        url: `/test-action`,
-        content: "클릭 버튼",
-        userId
-      };
-      send(actionSocket, payload, "Action");
+       for (let i = 0; i < 100; i++) {
+         const payload = {
+              type: "action",
+              url: `/test-action`,
+              content: `클릭 버튼 ${i + 1}`,
+              userId
+         }
+               send(actionSocket, payload, "Action");
     }
-
+}
     function sendError() {
       const userId = getUserIdAndTime();
-      const payload = {
-        type: "error",
-        code: "ERR123",
-        stace: "java.lang.NullPointerException...",
-        errorMsg: "테스트 에러 메시지",
-        userId
-      };
-      send(errorSocket, payload, "Error");
+         for (let i = 0; i < 100; i++) {
+            const payload = {
+                type: "error",
+                code: "ERR123",
+                stace: "java.lang.NullPointerException...",
+                errorMsg: `테스트 에러 메시지 ${i + 1}`,
+                userId
+       }
+             send(errorSocket, payload, "Error");
+      }
     }
 
     // 연결 상태 로그
@@ -88,6 +94,8 @@
       socket.onerror = () => statusDiv.innerHTML += `<div class="text-red-600">❌ ${label} WebSocket 오류</div>`;
       socket.onclose = () => statusDiv.innerHTML += `<div class="text-gray-500">⚠️ ${label} WebSocket 종료됨</div>`;
     });
+
+
 </script>
 </body>
 </html>

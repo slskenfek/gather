@@ -25,4 +25,10 @@ public class HomeTestController {
         return "queue/tcp_test";
     }
 
+    @GetMapping("/log/view")
+    public String logViewMove() {
+        return "queue/log_view";
+    }
+
+
 }

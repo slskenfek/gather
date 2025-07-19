@@ -51,6 +51,18 @@ public class ActionLogReadRepository {
 
     }
 
+    public List<LogResponse.ActionLog> selectAll() {
+        return jpaQueryFactory.select(new QLogResponse_ActionLog(
+                        actionLog.id,
+                        actionLog.url,
+                        actionLog.content,
+                        actionLog.users.userId,
+                        actionLog.time
+                ))
+                .from(actionLog)
+                .fetch();
+    }
+
     private BooleanExpression likeUrl(String url) {
         if (!StringUtils.hasText(url)) {
             return null;

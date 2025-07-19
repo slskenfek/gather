@@ -37,6 +37,7 @@ public class ActionLog {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Users users;
 
+
     private LocalDateTime time;
 
 }

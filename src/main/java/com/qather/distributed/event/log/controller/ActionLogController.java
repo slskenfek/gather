@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RequestMapping("/api/logs/action")
 @RequiredArgsConstructor
 @RestController
@@ -25,4 +27,10 @@ public class ActionLogController {
         PageImpl<LogResponse.ActionLog> responseAccessLog = logReadService.searchActionLog(param, pageable);
         return ResponseEntity.ok(responseAccessLog);
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<LogResponse.ActionLog>> actionLogAll() {
+        List<LogResponse.ActionLog> responseAccessLog = logReadService.selectAll();
+        return ResponseEntity.ok(responseAccessLog);
+    }
+
 }
