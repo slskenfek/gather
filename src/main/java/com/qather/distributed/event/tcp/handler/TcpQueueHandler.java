@@ -1,8 +1,8 @@
-package com.qather.distributed.tcp.handler;
+package com.qather.distributed.event.tcp.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qather.distributed.tcp.dispatcher.TcpMessageDispatcher;
+import com.qather.distributed.event.tcp.dispatcher.TcpMessageDispatcher;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

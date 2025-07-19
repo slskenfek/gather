@@ -1,4 +1,4 @@
-package com.qather.distributed.tcp.dispatcher;
+package com.qather.distributed.event.tcp.dispatcher;
 
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;

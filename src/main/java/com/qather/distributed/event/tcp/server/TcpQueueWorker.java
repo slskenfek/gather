@@ -1,7 +1,7 @@
-package com.qather.distributed.tcp.server;
+package com.qather.distributed.event.tcp.server;
 
-import com.qather.distributed.tcp.model.TcpBrokerProperty;
-import com.qather.distributed.tcp.handler.TcpQueueHandler;
+import com.qather.distributed.event.tcp.model.TcpBrokerProperty;
+import com.qather.distributed.event.tcp.handler.TcpQueueHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

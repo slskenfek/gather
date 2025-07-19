@@ -1,4 +1,4 @@
-package com.qather.distributed.socket.config;
+package com.qather.distributed.event.socket.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

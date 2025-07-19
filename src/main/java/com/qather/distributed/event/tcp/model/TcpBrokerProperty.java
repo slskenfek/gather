@@ -1,4 +1,4 @@
-package com.qather.distributed.tcp.model;
+package com.qather.distributed.event.tcp.model;
 
 
 import lombok.Getter;
