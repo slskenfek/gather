@@ -18,14 +18,15 @@ public class TcpQueueWorker {
 
 
     private final TcpBrokerProperty tcpBrokerProperty;
-
     private final TcpQueueHandler tcpQueueHandler;
     private static final Logger LOGGER = LoggerFactory.getLogger(TcpQueueWorker.class);
+    private static Long NUMBER = 0L;
 
 
     @PostConstruct
     public void start() {
         new Thread(() -> {
+            NUMBER++;
             try (ServerSocket socket = new ServerSocket(tcpBrokerProperty.getPort())) {
 
                 while (!Thread.currentThread().isInterrupted()) {
@@ -39,7 +40,7 @@ public class TcpQueueWorker {
             }
 
 
-        }, "tcp-log-worker").start();
+        }, "tcp-log-worker" + NUMBER).start();
     }
 
 
