@@ -1,19 +1,14 @@
 package com.qather.distributed.queue;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.qather.distributed.event.producer.controller.log.LogController;
-import com.qather.distributed.event.producer.service.LogProducerService;
 import com.qather.distributed.event.log.dto.ActionParam;
 import com.qather.distributed.event.log.dto.ErrorParam;
 import com.qather.distributed.event.log.dto.LogParam;
 import com.qather.distributed.event.log.dto.LogRequest;
-import com.qather.distributed.event.producer.dto.MemoryTaskParam;
-import com.qather.distributed.event.producer.model.QueueTask;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;

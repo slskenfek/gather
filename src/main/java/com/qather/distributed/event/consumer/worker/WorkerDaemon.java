@@ -29,12 +29,12 @@ public class WorkerDaemon {
     private final ThreadPoolTaskExecutor errorExecutor;
 
 
-
     @PostConstruct
     public void startWorker() {
 
-        logExecutor.execute(new HttpQueueWorker<>(logQueueTask, logEventService.stream()
-                .map(service -> (Consumer<LogParam>) service::createLog)
+        logExecutor.execute(new HttpQueueWorker<>(
+                logQueueTask, logEventService.stream().map(
+                        service -> (Consumer<LogParam>) service::createLog)
                 .toList()));
 
         actionExecutor.execute(new HttpQueueWorker<>(
