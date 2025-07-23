@@ -9,6 +9,8 @@ import com.qather.distributed.event.log.out.adapter.LogEventAdapter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DatabaseLogEventService implements LogEventService {
 
@@ -30,8 +32,22 @@ public class DatabaseLogEventService implements LogEventService {
     }
 
     @Override
-    public void errorLog(ErrorParam param) {
+    public void createErrorLog(ErrorParam param) {
         logEventAdapter.errorLog(param);
     }
 
+    @Override
+    public void bulkCreateLog(List<LogParam> param) {
+
+    }
+
+    @Override
+    public void bulkCreateActionLog(List<ActionParam> param) {
+
+    }
+
+    @Override
+    public void bulkCreateErrorLog(List<ErrorParam> param) {
+
+    }
 }

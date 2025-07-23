@@ -29,7 +29,7 @@ public class WorkerDaemon {
     private final ThreadPoolTaskExecutor errorExecutor;
 
 
-    @PostConstruct
+/*    @PostConstruct
     public void startWorker() {
 
         logExecutor.execute(new HttpQueueWorker<>(
@@ -44,10 +44,30 @@ public class WorkerDaemon {
 
         errorExecutor.execute(new HttpQueueWorker<>(
                 errorQueueTask, logEventService.stream().map(
-                service -> (Consumer<ErrorParam>) service::errorLog
+                service -> (Consumer<ErrorParam>) service::createErrorLog
+        ).toList()));
+
+    }*/
+
+
+    @PostConstruct
+    public void bulkStartWorker() {
+
+        logExecutor.execute(new HttpQueueWorker<>(
+                logQueueTask, logEventService.stream().map(
+                        service -> (Consumer<List<LogParam>>) service::bulkCreateLog)
+                .toList()));
+
+        actionExecutor.execute(new HttpQueueWorker<>(
+                actionQueueTask, logEventService.stream().map(
+                        service -> (Consumer<List<ActionParam>>) service::bulkCreateActionLog)
+                .toList()));
+
+        errorExecutor.execute(new HttpQueueWorker<>(
+                errorQueueTask, logEventService.stream().map(
+                service -> (Consumer<List<ErrorParam>>) service::bulkCreateErrorLog
         ).toList()));
 
     }
-
 
 }

@@ -4,6 +4,7 @@ import com.qather.distributed.event.producer.model.QueueTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -11,10 +12,10 @@ import java.util.function.Consumer;
 public class HttpQueueWorker<T> implements Runnable {
 
     private final QueueTask<T> queueTask;
-    private final List<Consumer<T>> consumers;
+    private final List<Consumer<List<T>>> consumers;
     private final static Logger LOGGER = LoggerFactory.getLogger(HttpQueueWorker.class);
 
-    public HttpQueueWorker(QueueTask<T> queueTask, List<Consumer<T>> consumers) {
+    public HttpQueueWorker(QueueTask<T> queueTask, List<Consumer<List<T>>> consumers) {
         this.queueTask = queueTask;
         this.consumers = consumers;
     }
@@ -23,9 +24,12 @@ public class HttpQueueWorker<T> implements Runnable {
     public void run() {
         while (!Thread.currentThread().isInterrupted()) {
             try {
-                T take = queueTask.take();
+                List<T> consumerList = new ArrayList<>();
+                queueTask.drainTo(consumerList, 300);
+
+                //T take = queueTask.take();
                 consumers.forEach(consumers -> {
-                    consumers.accept(take);
+                    consumers.accept(consumerList);
                 });
             } catch (InterruptedException e) {
                 LOGGER.error("인터럽트 에러 발생! {}", e.getMessage());

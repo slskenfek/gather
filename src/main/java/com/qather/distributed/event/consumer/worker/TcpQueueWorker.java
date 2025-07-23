@@ -1,4 +1,4 @@
-package com.qather.distributed.event.tcp.server;
+package com.qather.distributed.event.consumer.worker;
 
 import com.qather.distributed.event.tcp.model.TcpBrokerProperty;
 import com.qather.distributed.event.tcp.handler.TcpQueueHandler;

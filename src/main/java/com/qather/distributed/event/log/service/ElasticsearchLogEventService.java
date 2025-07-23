@@ -8,8 +8,10 @@ import com.qather.distributed.event.log.out.adapter.ElasticsearchLogAdapter;
 import com.qather.distributed.event.log.out.adapter.LogEventAdapter;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class ElasticsearchLogEventService implements LogEventService{
+public class ElasticsearchLogEventService implements LogEventService {
 
 
     private final LogEventAdapter logEventAdapter;
@@ -28,9 +30,24 @@ public class ElasticsearchLogEventService implements LogEventService{
         logEventAdapter.createActionLog(param);
     }
 
+
     @Override
-    public void errorLog(ErrorParam param) {
+    public void createErrorLog(ErrorParam param) {
         logEventAdapter.errorLog(param);
     }
 
+    @Override
+    public void bulkCreateErrorLog(List<ErrorParam> param) {
+
+    }
+
+    @Override
+    public void bulkCreateLog(List<LogParam> param) {
+
+    }
+
+    @Override
+    public void bulkCreateActionLog(List<ActionParam> param) {
+
+    }
 }
