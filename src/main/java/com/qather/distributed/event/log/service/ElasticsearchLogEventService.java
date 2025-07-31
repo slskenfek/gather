@@ -15,9 +15,13 @@ public class ElasticsearchLogEventService implements LogEventService {
 
 
     private final LogEventAdapter logEventAdapter;
-
     public ElasticsearchLogEventService(ElasticsearchLogAdapter elasticsearchLogAdapter) {
         this.logEventAdapter = elasticsearchLogAdapter;
+    }
+
+    @Override
+    public void deleteAllLog(Boolean all) {
+        //TODO deleteAll
     }
 
     @Override

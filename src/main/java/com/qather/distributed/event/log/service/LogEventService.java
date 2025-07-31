@@ -23,4 +23,6 @@ public interface LogEventService {
 
 
     void bulkCreateErrorLog(List<ErrorParam> param);
+
+    void deleteAllLog(Boolean all);
 }

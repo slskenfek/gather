@@ -12,4 +12,6 @@ public interface LogEventAdapter {
     void createActionLog(ActionParam param);
 
     void errorLog(ErrorParam param);
+
+    void deleteAllAccessLog();
 }

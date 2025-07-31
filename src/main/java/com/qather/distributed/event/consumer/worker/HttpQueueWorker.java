@@ -31,11 +31,9 @@ public class HttpQueueWorker<T> implements Runnable {
                 consumers.forEach(consumers -> {
                     consumers.accept(consumerList);
                 });
-            } catch (InterruptedException e) {
-                LOGGER.error("인터럽트 에러 발생! {}", e.getMessage());
-                Thread.currentThread().interrupt();
             } catch (Exception e) {
                 LOGGER.error("이벤트 루프 내부 에러 발생 : {}", e.getMessage());
+                Thread.currentThread().interrupt();
             }
 
         }

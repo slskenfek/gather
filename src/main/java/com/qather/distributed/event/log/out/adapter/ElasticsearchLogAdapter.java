@@ -19,6 +19,11 @@ public class ElasticsearchLogAdapter implements LogEventAdapter {
     private final LogElasticRepository logElasticRepository;
 
     @Override
+    public void deleteAllAccessLog() {
+        //TODO deleteAll
+    }
+
+    @Override
     public void createLog(LogParam param) {
         AccessLogDocument doc = AccessLogDocument.builder()
                 .id(UUID.randomUUID().toString())

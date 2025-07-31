@@ -24,6 +24,13 @@ public class DatabaseLogAdapter implements LogEventAdapter {
 
 
     @Override
+    public void deleteAllAccessLog() {
+        logRepository.deleteAll();
+        actionRepository.deleteAll();
+        errorRepository.deleteAll();
+    }
+
+    @Override
     public void createLog(LogParam param) {
         logRepository.save(param.toAccessLogEntity());
     }

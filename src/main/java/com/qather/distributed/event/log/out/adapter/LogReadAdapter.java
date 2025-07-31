@@ -5,6 +5,7 @@ import com.qather.distributed.event.log.dto.SearchLogRequest;
 import com.qather.distributed.event.log.out.repository.AccessLogReadRepository;
 import com.qather.distributed.event.log.out.repository.ActionLogReadRepository;
 import com.qather.distributed.event.log.out.repository.ErrorLogReadRepository;
+import com.qather.distributed.event.log.out.repository.LogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import java.util.List;
 public class LogReadAdapter {
 
     private final AccessLogReadRepository accessLogReadRepository;
+    private final LogRepository logRepository;
     private final ActionLogReadRepository actionLogReadRepository;
     private final ErrorLogReadRepository errorLogReadRepository;
 
@@ -43,5 +45,9 @@ public class LogReadAdapter {
 
     public List<LogResponse.ActionLog> selectAll() {
         return actionLogReadRepository.selectAll();
+    }
+
+    public void deleteAllAccessLog() {
+        logRepository.deleteAll();
     }
 }

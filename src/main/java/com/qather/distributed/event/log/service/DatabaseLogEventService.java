@@ -8,6 +8,7 @@ import com.qather.distributed.event.log.dto.LogParam;
 import com.qather.distributed.event.log.out.adapter.LogEventAdapter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,14 @@ public class DatabaseLogEventService implements LogEventService {
 
     public DatabaseLogEventService(@Qualifier("databaseLogAdapter") LogEventAdapter logEventAdapter) {
         this.logEventAdapter = logEventAdapter;
+    }
+
+
+    @Transactional
+    @Override
+    public void deleteAllLog(Boolean all) {
+        if (!all) throw new IllegalArgumentException(String.format("전체 삭제 플래그 값이 없습니다. %b", false));
+        logEventAdapter.deleteAllAccessLog();
     }
 
     @Override
